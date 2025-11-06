@@ -1,35 +1,32 @@
-# src: .gitignore
-# @(#) : gitignore for textlint filter (skip-frontmatter)
+## src: ./.gitignore
+## @(#) : gitignore for textlint filter (skip-frontmatter)
 #
-# Copyright (c) 2025 atsushifx <http://github.com/atsushifx>
+# @version	1.0.0
+# @author   atsushifx <https://github.com/atsushifx/>
+# @since    2025-05-14
 #
-# This software is released under the MIT License.
-# https://opensource.org/licenses/MIT
+# @description<<
+#
+# Git ignore rules for development template
+# Includes OS Specific  files, VSCode, general(logs, patch, ...)
+#
+#<<
 
-##  General
-# S specific files
+##		General
+#	OS specific files
 .DS_Store
 thumbs.db
 
-# logs
+#	logs, patches
 *.log
-logs
-
-# patches
 *.diff
 *.patch
 
-# history
+# 	history, cache
 .history/
-
-# cache
 .cache/
 **/*cache
 
-# env
-.env.key*
-.env.*.local
-.env*
 
 #	backup/swap/temp
 $~*
@@ -39,41 +36,27 @@ $~*
 *swp
 *lock
 
-## temporary directory
-**/temp/
-**/tmp/
+## AI generated files
+
+# Claude Code
+.claude/*
+
+# MCP server dependency files
+.serena/
+.lsmcp/
+
+## Temporary Directory
+temp/
+tmp/
+
 
 ##		Editor
 #	VSCode
-**/.vscode/*
-!**/.vscode/settings.json
-!**/.vscode/tasks.json
-!**/.vscode/launch.json
-!**/.vscode/extensions.json
-!**/.vscode/*.code-snippets
-!**/.vscode/cspell*
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+!.vscode/cspell*
 
-
-
-###	AI Agent
-# claude code
-**/.claude/*
-.claude/*
-!.clause/setting.json
-!.claude/commands
-!.claude/commands/*
-
-# CLAUDE Memory file
-!CLAUDE*.md
-!AGENTS.md
-
-## mcp settings/server's config
-!.mcp.json
-# mcp server's folder
-.serena
-.lsmcp
-
-
-###	Develop
-# Node
-node_modules

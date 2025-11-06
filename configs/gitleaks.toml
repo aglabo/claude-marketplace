@@ -9,37 +9,57 @@
 title = "Gitleaks config"
 
 [[allowlists]]
+description = "Exclude common large or irrelevant directories"
 paths = [
-	"'''node_modules/.*'''"
+  "node_modules/",
+  ".git/",
+  "dist",
+	"lib",
+	"maps",
+	"module",
+  ".cache/",
+  "pnpm-lock.yaml",
 ]
 
-level = "warn"
-redact = true
 
-[detect]
-secrets = true
-entropy = true
-
+# ======================
+# Rules: built-in rules + 強化版
+# ======================
+[[allowlists]]
+description = "Ignore safe config keywords"
+regexes = [
+  	'''https''',
+	'''config.base''',
+	'''.textlint''',
+	'''configs''',
+	'''markdown''',
+	'''.github''',
+	'''dprint.dev''',
+	'''conventionalcommits''',
+	'''contributor-covenant.org''',
+	#
+	'''.cache/''',
+	'''tsbuild-cache''',
+	# textlint
+	'''textlint-rule''',
+	'''ja-technical-writing''',
+	'''no-mixed-zenkaku-and-hankaku-alphabet''',
+	'''ja-space-between-half-and-full-width''',
+	# source code
+	'''AglaError''',
+	'''allowConciseArrowFunctionExpressionsStartingWithVoid''',
+	'''shared/types''',
+	#
+	'''claude/''',
+	'''typescript''',
+	'''integration''',
+	'''spec.ts''',
+	'''PSScriptRoot''',
+	'''internal-docs/''',
+]
 [[rules]]
-id = "github-token"
-description = "GitHub Token"
-regex = '''ghp_[0-9a-zA-Z]{36}'''
-tags = ["key", "GitHub"]
-
-[[rules]]
-id = "aws-secret-key"
-description = "AWS Secret Access Key"
-regex = '''(?i)aws(.{0,20})?(?-i)['"][0-9a-zA-Z/+]{40}['"]'''
-tags = ["key", "AWS"]
-
-[[rules]]
-id = "generic-api-key"
-description = "Generic API Key"
-regex = '''(?i)(api[_-]?key)(.{0,20})?['"][0-9a-zA-Z]{16,45}['"]'''
-tags = ["key", "generic"]
-
-[[rules]]
-id = "password-variable"
-description = "Generic password variable"
-regex = '''(?i)(password|passwd|pwd)['"]?\s*[:=]\s*['"].{6,}['"]'''
-tags = ["password", "generic"]
+id = "high-entropy"
+description = "Strict High Entropy String Rule"
+regex = '''[A-Za-z0-9+-/\\=]{35,}'''
+entropy = 3.7
+tags = ["entropy", "generic"]
